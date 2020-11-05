@@ -1,14 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
-    "lib": ["es6"],
-    "allowJs": true,
-    "outDir": "build",
-    "rootDir": "src",
+    "sourceMap": true,
+    "outDir": "dist",
     "strict": true,
-    "noImplicitAny": true,
+    "allowJs": false,
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+      "enums/*": ["enums/*"],
+      "handlers/*": ["handlers/*"],
+      "types/*": ["types/*"],
+      "database": ["database/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
