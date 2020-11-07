@@ -3,11 +3,12 @@ export enum ServerPackets {
     LoginInvalid,
     AccountCreated,
     UsernameAlreadyExists,
+    PlayerMove,
     Size
 }
 
 export enum ClientPackets {
     NewAccount,
     Login,
-    Size
+    PlayerMove,
 }
