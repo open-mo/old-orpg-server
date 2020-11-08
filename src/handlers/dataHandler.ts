@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 import {ClientPackets, ServerPackets} from "enums";
-import {AccountCredentials, Dictionary} from "types";
-import {sendClientMessage} from "handlers/messageSender";
-import {findOne, insertOne} from "../database";
-import {MongoError} from "mongodb";
+import { AccountCredentials, Dictionary, Player } from "types";
+import { sendClientMessage } from "handlers/messageSender";
+import { findOne, insertOne } from "../database";
+import { MongoError } from "mongodb";
 
 const dataHandler: Dictionary<any> = {};
 
@@ -30,7 +31,7 @@ const handleLogin = async ({ client, username, password }: AuthenticationAttempt
                     sendClientMessage({
                         client,
                         pkt: ServerPackets.LoginOk,
-                        data: []
+                        data: [user.player]
                     });
                 } else {
                     sendClientMessage({
@@ -68,10 +69,18 @@ const handleNewAccount = ({ client, username, password }: AuthenticationAttemptP
         bcrypt.hash(password, 10, (err: Error, hash: string) => {
             insertOne('users', { username, password: hash }, (err: MongoError, result: any) => {
                 if (!!result) {
+                    const newPlayer: Player = {
+                        _id: uuidv4(),
+                        name: username,
+                        animation: '',
+                        inventory: {},
+                        position: { x: 0, y: 0 },
+                    }
+
                     return sendClientMessage({
                         client,
                         pkt: ServerPackets.AccountCreated,
-                        data: []
+                        data: [newPlayer]
                     });
                 }
             });
