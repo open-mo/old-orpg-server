@@ -1,4 +1,4 @@
-import {ClientPackets, ItemType, ServerPackets} from "enums/packetTypes";
+import {ClientPackets, ServerPackets} from "enums/packetTypes";
 
 export type WebSocketMessage = string | ArrayBuffer | Buffer | Buffer[];
 
@@ -6,6 +6,7 @@ export interface Dictionary<T> {
     [Key: string]: T;
 }
 
+// TODO: Rename dis
 export interface AccountCredentials {
     username: string;
     password: string;
@@ -42,7 +43,6 @@ export interface Position {
 /* TODO: Extend this */
 interface Item {
     name: string;
-    type: ItemType;
 }
 
 export interface Player {

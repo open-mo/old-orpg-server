@@ -10,11 +10,25 @@ connection.on('error', () => {
 
 connection.on('open', () => {
     console.log(`Successfully connected to the database.`);
-});
-
-new mongoose.Schema({
-   username: String,
-   password: String
+    connection.db.createCollection('users', {
+        validator: {
+            $jsonSchema: {
+                bsonType: "object",
+                required: ["username", "password"],
+                properties: {
+                    username: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    },
+                    password: {
+                        bsonType: "string",
+                        description: "must be a string and is required"
+                    }
+                }
+            }
+        }
+    });
+    console.log(`diawjidjaw`);
 });
 
 connection.close();
